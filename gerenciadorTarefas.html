@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Minhas tarefas</h2>
+
+    <form id="formTarefa">
+        <label>Tarefa: </label>
+        <input id="inputTarefa" type="text" placeholder="Digite uma tarefa">
+        <button type="submit">Adicionar</button>
+    </form>
+
+    <h3 id="listaTarefas">Lista de Tarefas</h3>
+    <ul id="listaTarefa"></ul>
+
+    <script>
+        //Criando Array de tarefas
+        let lista = ["Estudar JS","Estudar SQL","Estudar Front-end"];
+
+        const from = document.getElementById("formTarefa");
+        const input = document.getElementById("inputTarefa");
+        const ul = document.getElementById("listaTarefa");
+
+        //Função para renderizar a lista na tela
+        function atualizarLista(){
+
+            ul.innerHTML = "";
+
+            lista.forEach((tarefa,index) => {
+
+                let li = document.createElement("li");
+                li.textContent = tarefa;
+
+                //Boatao editar 
+                let btnEditar = document.createElement("button");
+                btnEditar.textContent = "Editar";
+
+                btnEditar.onclick = () => {
+                    let nometarefa = prompt("Digite uma nova tarefa: ");
+                    
+                    if(nometarefa){
+                        lista[index] = nometarefa;
+                        atualizarLista();
+                    }
+                }
+
+                // Botão  Excluir
+                let btnExcluir = document.createElement("button");
+                btnExcluir.textContent = "Excluir";
+
+                btnExcluir.onclick = () => {
+                    if(confirm("Deseja realmente excluir? "));
+                    lista.splice(index, 1);
+                    atualizarLista();
+                    
+                    if(nometarefa){
+                        lista[index] = nometarefa;
+                        atualizarLista();
+                    }
+                }
+
+                //Ação de adicionar uma tarefa
+                form.addEventListener("submit", function(event){
+                    event.preventDefault();
+                    lista.push(input.value);
+                    input.value = "";
+                    atualizarLista();
+                });
+
+
+                      //Adiconar li no ul (listaTarefas)
+                      ul.appendChild(li);    
+                      li.appendChild(btnEditar);     
+                      li.appendChild(btnExcluir);         
+
+            }); // fecha o forEach
+        }
+
+        atualizarLista();
+
+    </script>
+</body>
+</html>
